@@ -1,0 +1,16 @@
+<%- include("../includes/header.ejs", {title:"Add New Address"}); %>
+    <h1>Add New Address</h1>
+    <form action="./insert" method="get">
+        Street Address: <input id="street" name="company_name" type="text" />
+        <br />
+        Zip Code: <input id="zip_code" name="company_name" type="text" />
+        <!-- Initialize the multiselect plugin: -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#address_id').multiselect();
+            });
+        </script>
+        <br />
+        <input type="submit" />
+    </form>
+<%- include("../includes/footer.ejs"); %>

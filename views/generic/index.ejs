@@ -1,0 +1,29 @@
+<% var pretty = table.replace(/\b\w/g, l => l.toUpperCase()) %>
+<%- include("../includes/header.ejs", {title: pretty+" - View All"}); %>
+<p class='title is-1' style='margin-bottom:0em'><%=pretty+' Table'%>
+<a style="margin-top:0.82em;margin-left:1.06em;"
+  class='button is-success' href="/add/<%=table%>">Add New <%=pretty%></a>
+</p>
+        <br />
+        <table class='table is-bordered is-hoverable is-fullwidth'>
+          <thead>
+            <tr>
+              <% for(var i=0; meta.length > i; i++ ) { %>
+              <th><%=meta[i].Field.replace(/_/g, ' ').replace(
+                /\b\w/g, l => l.toUpperCase())%></th>
+              <% } %>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; data.length > i; i++ ) { %>
+            <tr> <% for(var key in data[i]) {%>
+              <td> <% if(key == table+'_id') {%>
+                <a style="margin-top:0.82em;margin-left:1.15em;"
+                class='' href="/view/<%=table%>/<%=data[i][key]%>"><%=data[i][key]%> - View/Edit
+              </a> <%} else {%>
+              <%=data[i][key]%>
+            </td>
+              <% }} %> </tr> <% } %>
+          </tbody>
+        </table>
+<%- include("../includes/footer.ejs"); %>

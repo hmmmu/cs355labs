@@ -1,0 +1,19 @@
+<% var pretty = table.replace(/\b\w/g, l => l.toUpperCase());
+  %>
+<%- include("../includes/header.ejs", {title:"Add New "+pretty}); %>
+<p class='title is-1' style='margin-bottom:0.12em'>Add New <%=pretty%>
+</p>
+<form method="POST" action="/new/<%=table%>">
+<table class='table table is-narrow' style='margin-bottom:0.82em'>
+  <% for(var i=0; meta.length > i; i++ ) {
+    if(meta[i].Field != table+'_id'){
+      var disp = meta[i].Field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())%>
+      <div><%=disp%></div>
+    <div><input type="text" name="<%=meta[i].Field%>"></div>
+  <%}}%>
+</table>
+<p style='margin-top:0em;' class="title is-4">
+  <a href="/all/<%=table%>"><< back</a> |
+  <input type="submit" class='button is-success' value="Create New <%=pretty%>">
+</p> </form>
+<%- include("../includes/footer.ejs"); %>

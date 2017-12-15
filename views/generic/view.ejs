@@ -1,0 +1,34 @@
+<% var pretty = table.replace(/\b\w/g, l => l.toUpperCase());
+  var primary; for(var i=0; meta.length > i; i++ ) {
+  primary = meta[i].Field; if(~meta[i].Type.indexOf("varchar")) break;}
+  function meta_def(key) {for(var i=0; meta.length > i; i++) if (key==meta[i].Field) return meta[i];}
+  %>
+<%- include("../includes/header.ejs", {title:pretty+" - " + data[primary]}); %>
+<p class='title is-1' style='margin-bottom:0.12em'><%=pretty+': '+data[primary]%>
+  <a style="margin-top:0.84em;margin-left:0.46em;" class='button is-danger'
+    href="/drop/<%=table%>/<%=data[table+'_id']%>">REMOVE</a>
+</p>
+<form method="POST" action="/edit/<%=table%>">
+<input type="hidden" name="<%=table+'_id'%>" value="<%=data[table+'_id']%>"></div>
+<table class='table table is-narrow' style='margin-bottom:0.82em'>
+  <% for(key in data) {
+    let context = meta_def(key);
+    if(key[0] != '_' && ~context.Type.indexOf("varchar")){%>
+      <div><%=key.replace(/_/g, ' ').replace(
+        /\b\w/g, l => l.toUpperCase())%></div>
+    <div><input type="text" name="<%=key%>" value="<%=data[key]%>"></div>
+  <%} else { jesus=Object.keys(data[key])[0]; for(shit in data[key][jesus]){
+    if(!shit){break}; let context = meta_def(shit);
+    if(~context.Type.indexOf("varchar")){%>
+      <div><%=key.replace(/_/g, ' ').replace(
+        /\b\w/g, l => l.toUpperCase())%> ->
+        <%=shit.replace(/_/g, ' ').replace(
+        /\b\w/g, l => l.toUpperCase())%></div>
+    <div><input type="text" name="<%=shit%>" value="<%=data[key][jesus][shit]%>"></div>
+  <%}}}}%>
+</table>
+<p style='margin-top:0em;' class="title is-4">
+  <a href="/all/<%=table%>"><< back</a> |
+  <input type="submit" class='button is-success' value="Update <%=pretty%>">
+</p> </form>
+<%- include("../includes/footer.ejs"); %>
